@@ -8,4 +8,7 @@
   <ItemGroup>
     <PackageReference Include="dotNetRDF" Version="2.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+  </ItemGroup>
 </Project>

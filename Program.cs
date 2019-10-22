@@ -1,6 +1,4 @@
-﻿using System;
-using VDS.Common;
-using VDS.RDF;
+﻿using SimpleRdfConsole.Examples;
 
 namespace SimpleRdfConsole
 {
@@ -8,9 +6,9 @@ namespace SimpleRdfConsole
     {
         static void Main(string[] args)
         {
-            IGraph g = new Graph();
+            var example = new SimpleWriteExample();
 
-            Console.WriteLine("Create instance of Graph");
+            example.Execute();
         }
     }
 }
