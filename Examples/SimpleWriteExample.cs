@@ -12,10 +12,10 @@ namespace SimpleRdfConsole.Examples
         {
             IGraph graph = new Graph();
 
-            IUriNode dotNetRDF = graph.CreateUriNode(UriFactory.Create("http://www.dotnetrdf.org"));
-            IUriNode says = graph.CreateUriNode(UriFactory.Create("http://example.org/says"));
-            ILiteralNode helloWorld = graph.CreateLiteralNode("Hello World");
-            ILiteralNode bonjourMonde = graph.CreateLiteralNode("Bonjour tout le Monde", "fr");
+            var dotNetRDF = graph.CreateUriNode(UriFactory.Create("http://www.dotnetrdf.org"));
+            var says = graph.CreateUriNode(UriFactory.Create("http://example.org/says"));
+            var helloWorld = graph.CreateLiteralNode("Hello World");
+            var bonjourMonde = graph.CreateLiteralNode("Bonjour tout le Monde", "fr");
 
             graph.Assert(new Triple(dotNetRDF, says, helloWorld));
             graph.Assert(new Triple(dotNetRDF, says, bonjourMonde));
@@ -24,7 +24,8 @@ namespace SimpleRdfConsole.Examples
                 {
                     new ConsoleWriter(),
                     new RdfWriter(),
-                    new XmlWriter()
+                    new XmlWriter(),
+                    new MyTurtleWriter(),
                 };
 
             writers.ForEach(item => item.Write(graph));
@@ -50,7 +51,7 @@ namespace SimpleRdfConsole.Examples
         {
             public void Write(IGraph graph)
             {
-                NTriplesWriter ntwriter = new NTriplesWriter();
+                var ntwriter = new NTriplesWriter();
                 ntwriter.Save(graph, "HelloWorld.nt");
             }
         }
@@ -59,8 +60,17 @@ namespace SimpleRdfConsole.Examples
         {
             public void Write(IGraph graph)
             {
-                RdfXmlWriter rdfxmlwriter = new RdfXmlWriter();
+                var rdfxmlwriter = new RdfXmlWriter();
                 rdfxmlwriter.Save(graph, "HelloWorld.rdf");
+            }
+        }
+
+        private class MyTurtleWriter : IWriter
+        {
+            public void Write(IGraph graph)
+            {
+                var writer = new CompressingTurtleWriter(VDS.RDF.Parsing.TurtleSyntax.W3C);
+                writer.Save(graph, "HelloWorld.ttl");
             }
         }
     }
