@@ -6,8 +6,10 @@ namespace SimpleRdfConsole
     {
         static void Main(string[] args)
         {
-            var example = new SimpleWriteExample();
+            IExample example = new SimpleWriteExample();
+            example.Execute();
 
+            example = new SimpleReadExample();
             example.Execute();
         }
     }
