@@ -13,7 +13,7 @@ namespace SimpleRdfConsole
             example = new SimpleReadExample();
             example.Execute();*/
 
-            IExample example = new WorkingWithGraphsExample();
+            IExample example = new SimpleWriteExample();
             example.Execute();
         }
     }

@@ -23,55 +23,12 @@ namespace SimpleRdfConsole.Examples
             var writers = new List<IWriter>()
                 {
                     new ConsoleWriter(),
-                    new RdfWriter(),
-                    new XmlWriter(),
-                    new MyTurtleWriter(),
+                    new RdfWriter("HelloWorld.nt"),
+                    new XmlWriter("HelloWorld.rdf"),
+                    new MyTurtleWriter("HelloWorld.ttl"),
                 };
 
             writers.ForEach(item => item.Write(graph));
-        }
-
-        private interface IWriter
-        {
-            void Write(IGraph graph);
-        }
-
-        private class ConsoleWriter : IWriter
-        {
-            public void Write(IGraph graph)
-            {
-                foreach (Triple t in graph.Triples)
-                {
-                    Console.WriteLine(t.ToString());
-                }
-            }
-        }
-
-        private class RdfWriter : IWriter
-        {
-            public void Write(IGraph graph)
-            {
-                var ntwriter = new NTriplesWriter();
-                ntwriter.Save(graph, "HelloWorld.nt");
-            }
-        }
-
-        private class XmlWriter : IWriter
-        {
-            public void Write(IGraph graph)
-            {
-                var rdfxmlwriter = new RdfXmlWriter();
-                rdfxmlwriter.Save(graph, "HelloWorld.rdf");
-            }
-        }
-
-        private class MyTurtleWriter : IWriter
-        {
-            public void Write(IGraph graph)
-            {
-                var writer = new CompressingTurtleWriter(VDS.RDF.Parsing.TurtleSyntax.W3C);
-                writer.Save(graph, "HelloWorld.ttl");
-            }
-        }
+        }        
     }
 }
