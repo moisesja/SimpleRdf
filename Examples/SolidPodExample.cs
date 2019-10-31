@@ -14,6 +14,9 @@ namespace SimpleRdfConsole.Examples
             try
             {
                 //UriLoader.Load(graph, new Uri("https://moisesj.inrupt.net/profile/card#me"));
+
+                Options.HttpFullDebugging = true;
+
                 UriLoader.Load(graph, new Uri("https://moisesj.inrupt.net/public"));
 
                 foreach (Triple t in graph.Triples)
