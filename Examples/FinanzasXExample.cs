@@ -37,9 +37,10 @@ namespace SimpleRdfConsole.Examples
             var me = graph.CreateUriNode(UriFactory.Create("https://moisesj.inrupt.net/profile/card#me"));
 
             var accountType = graph.CreateUriNode(UriFactory.Create("http://example.org/accountType"));
-
+            var cash = graph.CreateLiteralNode("Cash");
 
             graph.Assert(new Triple(cashAccount, isOwnedBy, me));
+            graph.Assert(new Triple(cashAccount, accountType, cash));
 
             var writers = new List<IWriter>()
                 {
