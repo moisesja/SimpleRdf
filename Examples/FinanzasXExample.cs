@@ -36,6 +36,9 @@ namespace SimpleRdfConsole.Examples
             var isOwnedBy = graph.CreateUriNode(UriFactory.Create("http://example.org/isowned"));
             var me = graph.CreateUriNode(UriFactory.Create("https://moisesj.inrupt.net/profile/card#me"));
 
+            var accountType = graph.CreateUriNode(UriFactory.Create("http://example.org/accountType"));
+
+
             graph.Assert(new Triple(cashAccount, isOwnedBy, me));
 
             var writers = new List<IWriter>()
