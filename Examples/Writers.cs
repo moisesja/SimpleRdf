@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using VDS.RDF;
 using VDS.RDF.Writing;
 
@@ -62,5 +63,21 @@ namespace SimpleRdfConsole.Examples
         }
 
         protected override BaseRdfWriter SpecializedWriter => new CompressingTurtleWriter(VDS.RDF.Parsing.TurtleSyntax.W3C);
-    }    
+    }
+    
+    public static class GraphExtensions
+    {
+        public static void Write(this IGraph graph, string baseFileName)
+        {
+            var writers = new List<IWriter>()
+            {
+                new ConsoleWriter(),
+                new MyTurtleWriter($"{baseFileName}.ttl"),
+                new RdfWriter($"{baseFileName}.nt"),
+                new XmlWriter($"{baseFileName}.rdf"),
+            };
+
+            writers.ForEach(item => item.Write(graph));
+        }
+    }
 }

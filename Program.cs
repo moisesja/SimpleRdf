@@ -5,8 +5,11 @@ namespace SimpleRdfConsole
     class Program
     {
         static void Main(string[] args)
-        {            
-            var example = new FinanzasXExample();
+        {
+            const string POD_URI = "https://moisesj.inrupt.net";
+            //const string POD_URI = "https://moisesj.solid.community";
+
+            var example = new SolidPodExample(POD_URI);
             example.Execute();
         }
     }

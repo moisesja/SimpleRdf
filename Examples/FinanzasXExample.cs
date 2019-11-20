@@ -8,30 +8,11 @@ namespace SimpleRdfConsole.Examples
 {
     public class FinanzasXExample : IExample
     {
-        public object CreateCashAccountForProfile()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// The operation will be a cash transfer from me to Liz
-        /// </summary>
-        /// <returns></returns>
-        public object CreateCashTransaction()
-        {
-            return null;
-        }
-
-        public void PersistGraph()
-        {
-
-        }
-
         public void Execute()
         {
             var graph = new Graph();
 
-            var cashAccount = graph.CreateUriNode(UriFactory.Create("https://moisesj.inrupt.net/private/finanzasx/accounts/cash"));
+            var cashAccount = graph.CreateUriNode(UriFactory.Create("https://moisesj.solid.community/private/FinanzasX/Accounts/Cash"));
 
             var isOwnedBy = graph.CreateUriNode(UriFactory.Create("http://example.org/isowned"));
             var me = graph.CreateUriNode(UriFactory.Create("https://moisesj.inrupt.net/profile/card#me"));
