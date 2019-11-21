@@ -1,48 +1,17 @@
-﻿using System;
-using System.Net;
-using Vocab;
+﻿using SimpleRdfConsole.Examples.Rest;
+using System;
+using System.IO;
 using VDS.RDF;
 using VDS.RDF.Parsing;
-using System.Collections.Generic;
-using VDS.RDF.Query;
-using VDS.RDF.Query.Builder;
 
 namespace SimpleRdfConsole.Examples
 {
     public class SolidPodExample : IExample
     {
-        public readonly string _podUri;
+        public readonly string _podUri;        
 
         public object GetPublicLdContainer(IGraph graph)
         {
-            var queryString = new SparqlParameterizedString();
-            
-            string x = "x";
-            var queryBuilder =
-                QueryBuilder
-                .Select(new string[] { x })
-                .Where(
-                    (triplePatternBuilder) =>
-                    {
-                        triplePatternBuilder
-                            .Subject(x)
-                            .Predicate ("rdf:type")
-                            .Object("ldp:BasicContainer");
-                    });
-
-            //ldp: .
-
-            var prefixes = new NamespaceMapper();
-
-            prefixes.AddNamespace("ldp", new Uri("http://www.w3.org/ns/ldp#"));
-
-            queryBuilder.Prefixes = prefixes;
-
-            var processor = new GenericQueryProcessor();
-
-
-            Console.WriteLine(queryBuilder.BuildQuery().ToString());
-
             return null;
         }
 
@@ -86,28 +55,27 @@ namespace SimpleRdfConsole.Examples
 
         public void Execute()
         {
-            using (IGraph rootPodGraph = new Graph())
+            try
             {
-                try
-                {
-                    var podEndPoint = new SparqlRemoteEndpoint(new Uri());
-                    //UriLoader.Load(rootPodGraph, new Uri(_podUri));
+                var solidClient = new SolidRestClient(_podUri);
 
-                    //Options.HttpFullDebugging = true;
+                var returnedText = solidClient.GetAsync("public/financial-aggregator/accounts").GetAwaiter().GetResult();
 
-                    //rootPodGraph.Write("root-pod");
+                var parser = new TurtleParser();
+                
+                var textReader = new StringReader(returnedText);
+                
 
-                    //var publicFolder = GetPublicLdContainer(rootPodGraph);
-                }
-                catch (WebException webExc)
-                {
+                IGraph graph = new Graph();
+                parser.Load(graph, textReader);
+                graph.Write("public-folder");
 
-                }
-                catch (Exception exc)
-                {
 
-                }
             }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc.ToString());
+            }        
         }
     }
 }
